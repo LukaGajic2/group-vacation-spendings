@@ -21,16 +21,37 @@ def get_individual_spendings():
     by comas. The loop will repeatedly request data, until it is valid.
     """
     
-    print('Please enter spendings for each group member for today')
+    print('Please enter spendings for each group member for today in order Matt, Loreen-Nicole, Luka, Lejla, Emma')
     print('Data should be 5 numbers, separated by comas')
     print('Example: 10,20,30,40,50,60\n')
 
     spendings_str = input('Enter your spendings here:\n')
 
-    print(f'The spendings provided are {spendings_str}')
+    spendings_data = spendings_str.split(',')
+
+    validate_data(spendings_data)
+
+
+def validate_data(values):
+    """
+    Convert all input string values from 'spendings_str' into integers
+    and raises ValueError if strings can not be converted into integers and/or
+    if it is not exactly 5 values.
+    """
+    
+    try:
+        [int(value) for value in values]
+        if len(values) != 5:
+            raise ValueError(f'It is exactly 5 values required, you provided {len(values)}')
+    except ValueError as e:
+        print(f'You provided invalid data: {e}, please try again.\n')
+
 
 
 get_individual_spendings()
+
+"""Check if exactly 5 values is provided from the user. """
+
 
 
 
