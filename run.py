@@ -18,7 +18,7 @@ def get_individual_spendings():
     Get todays spendings from each group member.
     Run a while loop to collect a valid string of data from the user
     via the terminal, wich must be a string of 5 numbers separated
-    by comas. The loop will repeatedly request data, until it is valid.
+    by comas. The loop will repeatedly ask for data, until it is valid.
     """
     while True:
         print('Please enter spendings for each group member for today in order Matt, Loreen-Nicole, Luka, Lejla, Emma')
@@ -54,5 +54,18 @@ def validate_data(values):
     return True
 
 
+def update_individual_spendings_worksheet(data):
+    """
+    Update 'individual_spendings' worksheet, add a new row with the list data provided.
+    """
+    print('Updating "individual spendings" worksheet...\n')
+    individual_spendings_worksheet = SHEET.worksheet('individual spendings')
+    individual_spendings_worksheet.append_row(data)
+
+    print('"individual spendings" worksheet successfully updated!\n')
+
+
 individual_spendings_values = get_individual_spendings()
+spendings_data = [int(num) for num in individual_spendings_values]
+update_individual_spendings_worksheet(spendings_data)
 
