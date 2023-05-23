@@ -20,16 +20,20 @@ def get_individual_spendings():
     via the terminal, wich must be a string of 5 numbers separated
     by comas. The loop will repeatedly request data, until it is valid.
     """
-    
-    print('Please enter spendings for each group member for today in order Matt, Loreen-Nicole, Luka, Lejla, Emma')
-    print('Data should be 5 numbers, separated by comas')
-    print('Example: 10,20,30,40,50,60\n')
+    while True:
+        print('Please enter spendings for each group member for today in order Matt, Loreen-Nicole, Luka, Lejla, Emma')
+        print('Data should be 5 numbers, separated by comas')
+        print('Example: 10,20,30,40,50,60\n')
 
-    spendings_str = input('Enter your spendings here:\n')
+        spendings_str = input('Enter your spendings here:\n')
 
-    spendings_data = spendings_str.split(',')
+        spendings_data = spendings_str.split(',')
 
-    validate_data(spendings_data)
+        if validate_data(spendings_data):
+            print('Data is correct')
+            break
+        
+    return spendings_data
 
 
 def validate_data(values):
@@ -45,14 +49,10 @@ def validate_data(values):
             raise ValueError(f'It is exactly 5 values required, you provided {len(values)}')
     except ValueError as e:
         print(f'You provided invalid data: {e}, please try again.\n')
+        return False
+
+    return True
 
 
-
-get_individual_spendings()
-
-"""Check if exactly 5 values is provided from the user. """
-
-
-
-
+individual_spendings_values = get_individual_spendings()
 
