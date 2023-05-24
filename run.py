@@ -69,8 +69,15 @@ def update_individual_spendings_worksheet(data):
 def calculate_total_individual_spendings(individual_spendings_row):
     total_spendings = SHEET.worksheet('Total individual spendings').get_all_values()
     total_spendings_row = total_spendings[-1]
+
+    total_data = []
+    for total_spendings, individual_spendings_worksheet in zip(total_spendings_row, individual_spendings_row):
+        total = int(total_spendings) + individual_spendings_worksheet
+        total_data.append(total)
+    print(total_data)
     
-    print(total_spendings_row)
+    #print(f'individ row: {individual_spendings_row}')
+    #print(f'total row: {total_spendings_row}')
     
 
 def main():
