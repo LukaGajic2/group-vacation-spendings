@@ -1,5 +1,6 @@
 import gspread
 from google.oauth2.service_account import Credentials
+from pprint import pprint
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -65,7 +66,23 @@ def update_individual_spendings_worksheet(data):
     print('"individual spendings" worksheet successfully updated!\n')
 
 
-individual_spendings_values = get_individual_spendings()
-spendings_data = [int(num) for num in individual_spendings_values]
-update_individual_spendings_worksheet(spendings_data)
+def calculate_total_individual_spendings(individual_spendings_row):
+    total_spendings = SHEET.worksheet('Total individual spendings').get_all_values()
+    total_spendings_row = total_spendings[-1]
+    
+    print(total_spendings_row)
+    
 
+def main():
+    """
+    Run all program functions
+    """
+    individual_spendings_values = get_individual_spendings()
+    spendings_data = [int(num) for num in individual_spendings_values]
+    update_individual_spendings_worksheet(spendings_data)
+    calculate_total_individual_spendings(spendings_data)
+
+    
+
+print('Welcome to Vacation Spendings Group')
+main()
