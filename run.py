@@ -66,6 +66,16 @@ def update_individual_spendings_worksheet(data):
     print('"individual spendings" worksheet successfully updated!\n')
 
 
+def update_total_individual_spendings_worksheet(data):
+    """
+    Update surplus worksheet, add new row with list data provided
+    """
+    print('Updating "Total individual spendings" worksheet...\n ')
+    total_individual_spendings_worksheet = SHEET.worksheet('Total individual spendings')
+    total_individual_spendings_worksheet.append_row(data)
+    print('Total individual spendings worksheet updated successfully.\n')
+
+
 def calculate_total_individual_spendings(individual_spendings_row):
     total_spendings = SHEET.worksheet('Total individual spendings').get_all_values()
     total_spendings_row = total_spendings[-1]
@@ -74,10 +84,7 @@ def calculate_total_individual_spendings(individual_spendings_row):
     for total_spendings, individual_spendings_worksheet in zip(total_spendings_row, individual_spendings_row):
         total = int(total_spendings) + individual_spendings_worksheet
         total_data.append(total)
-    print(total_data)
-    
-    #print(f'individ row: {individual_spendings_row}')
-    #print(f'total row: {total_spendings_row}')
+    return total_data
     
 
 def main():
@@ -87,8 +94,8 @@ def main():
     individual_spendings_values = get_individual_spendings()
     spendings_data = [int(num) for num in individual_spendings_values]
     update_individual_spendings_worksheet(spendings_data)
-    calculate_total_individual_spendings(spendings_data)
-
+    new_total_data = calculate_total_individual_spendings(spendings_data)
+    update_total_individual_spendings_worksheet(new_total_data)
     
 
 print('Welcome to Vacation Spendings Group')
