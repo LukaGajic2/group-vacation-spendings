@@ -22,7 +22,7 @@ def get_individual_spendings():
     by comas. The loop will repeatedly ask for data, until it is valid.
     """
     while True:
-        print('Please enter spendings for each group member for today in order Matt, Loreen-Nicole, Luka, Lejla, Emma')
+        print('Please enter spendings for each group member for today in order \nMatt, Loreen-Nicole, Luka, Lejla, Emma')
         print('Data should be 5 numbers, separated by comas')
         print('Example: 10,20,30,40,50,60\n')
 
@@ -68,7 +68,7 @@ def update_individual_spendings_worksheet(data):
 
 def update_total_individual_spendings_worksheet(data):
     """
-    Update surplus worksheet, add new row with list data provided
+    Update s worksheet, add new row with list data provided
     """
     print('Updating "Total individual spendings" worksheet...\n ')
     total_individual_spendings_worksheet = SHEET.worksheet('Total individual spendings')
@@ -85,6 +85,17 @@ def calculate_total_individual_spendings(individual_spendings_row):
         total = int(total_spendings) + individual_spendings_worksheet
         total_data.append(total)
     return total_data
+
+
+def spendings_difference():
+
+    total_individual_spendings_worksheet = SHEET.worksheet('Total individual spendings')
+    columns = []
+    for ind in range(1, 6):
+        column = total_individual_spendings_worksheet.col_values(ind)
+        columns.append(column[-1:])
+    
+    return columns
     
 
 def main():
@@ -96,7 +107,14 @@ def main():
     update_individual_spendings_worksheet(spendings_data)
     new_total_data = calculate_total_individual_spendings(spendings_data)
     update_total_individual_spendings_worksheet(new_total_data)
+    print(new_total_data)
+    total_sum = sum(new_total_data)
+    print(total_sum)
     
-
+    
 print('Welcome to Vacation Spendings Group')
-main()
+#main()
+
+
+total_spendings_column = spendings_difference()
+print(total_spendings_column)
