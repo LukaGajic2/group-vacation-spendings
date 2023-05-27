@@ -87,17 +87,23 @@ def calculate_total_individual_spendings(individual_spendings_row):
     return total_data
 
 
-def spendings_difference():
-
-    total_individual_spendings_worksheet = SHEET.worksheet('Total individual spendings')
-    columns = []
-    for ind in range(1, 6):
-        column = total_individual_spendings_worksheet.col_values(ind)
-        columns.append(column[-1:])
+def get_average_spendings():
+    total_spendings = SHEET.worksheet('Total individual spendings').get_all_values()
+    last_row = total_spendings[-1]
+    int_last_row = [int(num) for num in last_row]
+    average_sum = sum(int_last_row) / 5
+    int_last_row = [x - average_sum for x in int_last_row ]
     
-    return columns
-    
+    return int_last_row
+    #print(spendings_difference_row)
 
+
+def update_spendings_difference(data):
+    spendings_difference_worksheet = SHEET.worksheet('spendings difference')
+    spendings_difference_worksheet.append_row(data)
+    spendings_difference_row = spendings_difference_worksheet[-1]
+
+    
 def main():
     """
     Run all program functions
@@ -108,13 +114,10 @@ def main():
     new_total_data = calculate_total_individual_spendings(spendings_data)
     update_total_individual_spendings_worksheet(new_total_data)
     print(new_total_data)
-    total_sum = sum(new_total_data)
-    print(total_sum)
-    
-    
+    average_number = get_average_spendings()
+    print(average_number)
+    update_spendings_difference(average_number)
+ 
 print('Welcome to Vacation Spendings Group')
-#main()
-
-
-total_spendings_column = spendings_difference()
-print(total_spendings_column)
+main()
+#update_spendings_difference()
