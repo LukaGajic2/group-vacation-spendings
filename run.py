@@ -1,6 +1,5 @@
 import gspread
 from google.oauth2.service_account import Credentials
-from pprint import pprint
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -22,8 +21,9 @@ def get_individual_spendings():
     by comas. The loop will repeatedly ask for data, until it is valid.
     """
     while True:
-        print('Please enter spendings for each group member for today in order \nMatt, Loreen-Nicole, Luka, Lejla, Emma')
-        print('Data should be 5 numbers, separated by comas')
+        print('Please enter spendings for each group member for today in order')
+        print('Matt, Lauren-Nicole, Luka, Lejla, Emma')
+        print('Data should be 5 whole numbers, separated by comas')
         print('Example: 10,20,30,40,50,60\n')
 
         spendings_str = input('Enter your spendings here:\n')
@@ -31,7 +31,7 @@ def get_individual_spendings():
         spendings_data = spendings_str.split(',')
 
         if validate_data(spendings_data):
-            print('Data is correct')
+            print('Data is correct\n')
             break
         
     return spendings_data
@@ -57,26 +57,24 @@ def validate_data(values):
 
 def update_individual_spendings_worksheet(data):
     """
-    Update 'individual_spendings' worksheet, add a new row with the list data provided.
+    Update 'Individual_spendings' worksheet, add a new row with the list data provided.
     """
-    print('Updating "individual spendings" worksheet...\n')
     individual_spendings_worksheet = SHEET.worksheet('individual spendings')
     individual_spendings_worksheet.append_row(data)
-
-    print('"individual spendings" worksheet successfully updated!\n')
 
 
 def update_total_individual_spendings_worksheet(data):
     """
-    Update s worksheet, add new row with list data provided
+    Update 'Total individual spendings' worksheet, add new row with list data provided
     """
-    print('Updating "Total individual spendings" worksheet...\n ')
     total_individual_spendings_worksheet = SHEET.worksheet('Total individual spendings')
     total_individual_spendings_worksheet.append_row(data)
-    print('Total individual spendings worksheet updated successfully.\n')
 
 
 def calculate_total_individual_spendings(individual_spendings_row):
+    """
+    Calculate and get total individual spendings for each group member
+    """
     total_spendings = SHEET.worksheet('Total individual spendings').get_all_values()
     total_spendings_row = total_spendings[-1]
 
@@ -88,22 +86,26 @@ def calculate_total_individual_spendings(individual_spendings_row):
 
 
 def get_average_spendings():
+    """
+    Get average spendings per group member using accurate groups total spending
+    """
     total_spendings = SHEET.worksheet('Total individual spendings').get_all_values()
     last_row = total_spendings[-1]
     int_last_row = [int(num) for num in last_row]
     average_sum = sum(int_last_row) / 5
-    int_last_row = [x - average_sum for x in int_last_row ]
+    int_last_row = [round(x - average_sum) for x in int_last_row ]
     
     return int_last_row
-    #print(spendings_difference_row)
-
+    
 
 def update_spendings_difference(data):
+    """
+    Update difference in members total spending to groups average spending
+    """
     spendings_difference_worksheet = SHEET.worksheet('spendings difference')
     spendings_difference_worksheet.append_row(data)
-    spendings_difference_row = spendings_difference_worksheet[-1]
 
-    
+
 def main():
     """
     Run all program functions
@@ -113,11 +115,18 @@ def main():
     update_individual_spendings_worksheet(spendings_data)
     new_total_data = calculate_total_individual_spendings(spendings_data)
     update_total_individual_spendings_worksheet(new_total_data)
-    print(new_total_data)
     average_number = get_average_spendings()
-    print(average_number)
     update_spendings_difference(average_number)
- 
-print('Welcome to Vacation Spendings Group')
+    headings = SHEET.worksheet('Total individual spendings').row_values(1)
+    print('Total members spendings!')
+    print(headings)
+    print(new_total_data)
+    print('Difference saldo shows difference in members spendings compared\n to groups average spendings:')
+    print('- minus saldo represent that member has spend LESS than average')
+    print('- plus saldo represent that member has spend MORE than average\n')
+    print(headings)
+    print(average_number)
+    
+
+print('Welcome to Vacation Spendings Group\n')
 main()
-#update_spendings_difference()
