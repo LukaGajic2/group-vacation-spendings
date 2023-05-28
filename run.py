@@ -21,7 +21,7 @@ def get_individual_spendings():
     by comas. The loop will repeatedly ask for data, until it is valid.
     """
     while True:
-        print('Please enter spendings for each group member for today in order')
+        print('Enter spendings for each group member for today in order')
         print('Matt, Lauren-Nicole, Luka, Lejla, Emma')
         print('Data should be 5 whole numbers, separated by comas')
         print('Example: 10,20,30,40,50,60\n')
@@ -47,7 +47,8 @@ def validate_data(values):
     try:
         [int(value) for value in values]
         if len(values) != 5:
-            raise ValueError(f'It is exactly 5 values required, you provided {len(values)}')
+            raise ValueError(
+                f'It is exactly 5 values required, you provided {len(values)}')
     except ValueError as e:
         print(f'You provided invalid data: {e}, please try again.\n')
         return False
@@ -57,7 +58,8 @@ def validate_data(values):
 
 def update_individual_spendings_worksheet(data):
     """
-    Update 'Individual_spendings' worksheet, add a new row with the list data provided.
+    Update 'Individual_spendings' worksheet,
+    add a new row with the list data provided.
     """
     individual_spendings_worksheet = SHEET.worksheet('individual spendings')
     individual_spendings_worksheet.append_row(data)
@@ -65,17 +67,21 @@ def update_individual_spendings_worksheet(data):
 
 def update_total_individual_spendings_worksheet(data):
     """
-    Update 'Total individual spendings' worksheet, add new row with list data provided
+    Update 'Total individual spendings' worksheet,
+    add new row with list data provided
     """
-    total_individual_spendings_worksheet = SHEET.worksheet('Total individual spendings')
-    total_individual_spendings_worksheet.append_row(data)
+    tot_individ_spendings_worksheet = SHEET.worksheet(
+        'Total individual spendings')
+    tot_individ_spendings_worksheet.append_row(data)
 
 
 def calculate_total_individual_spendings(individual_spendings_row):
     """
     Calculate and get total individual spendings for each group member
     """
-    total_spendings = SHEET.worksheet('Total individual spendings').get_all_values()
+    total_spendings = SHEET.worksheet(
+        'Total individual spendings').get_all_values()
+
     total_spendings_row = total_spendings[-1]
 
     total_data = []
@@ -89,7 +95,9 @@ def get_average_spendings():
     """
     Get average spendings per group member using accurate groups total spending
     """
-    total_spendings = SHEET.worksheet('Total individual spendings').get_all_values()
+    total_spendings = SHEET.worksheet(
+        'Total individual spendings').get_all_values()
+
     last_row = total_spendings[-1]
     int_last_row = [int(num) for num in last_row]
     average_sum = sum(int_last_row) / 5
@@ -118,15 +126,17 @@ def main():
     average_number = get_average_spendings()
     update_spendings_difference(average_number)
     headings = SHEET.worksheet('Total individual spendings').row_values(1)
-    print('Total members spendings!')
+    print('Total members spendings!\n')
     print(headings)
     print(new_total_data)
-    print('Difference saldo shows difference in members spendings compared\n to groups average spendings:')
-    print('- minus saldo represent that member has spend LESS than average')
-    print('- plus saldo represent that member has spend MORE than average\n')
+    print("""
+    Difference saldo shows difference in members spendings,
+compared to groups average spendings:
+- MINUS saldo represent that member has spend LESS than average
+- PLUS saldo represent that member has spend MORE than average \n""")
     print(headings)
     print(average_number)
 
-
+    
 print('Welcome to Vacation Spendings Group\n')
 main()
