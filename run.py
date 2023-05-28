@@ -33,7 +33,7 @@ def get_individual_spendings():
         if validate_data(spendings_data):
             print('Data is correct\n')
             break
-        
+
     return spendings_data
 
 
@@ -43,7 +43,7 @@ def validate_data(values):
     and raises ValueError if strings can not be converted into integers and/or
     if it is not exactly 5 values.
     """
-    
+
     try:
         [int(value) for value in values]
         if len(values) != 5:
@@ -93,10 +93,10 @@ def get_average_spendings():
     last_row = total_spendings[-1]
     int_last_row = [int(num) for num in last_row]
     average_sum = sum(int_last_row) / 5
-    int_last_row = [round(x - average_sum) for x in int_last_row ]
-    
+    int_last_row = [round(x - average_sum) for x in int_last_row]
+
     return int_last_row
-    
+
 
 def update_spendings_difference(data):
     """
@@ -126,7 +126,7 @@ def main():
     print('- plus saldo represent that member has spend MORE than average\n')
     print(headings)
     print(average_number)
-    
+
 
 print('Welcome to Vacation Spendings Group\n')
 main()
