@@ -21,17 +21,22 @@ def get_individual_spendings():
     by comas. The loop will repeatedly ask for data, until it is valid.
     """
     while True:
-        print('Enter spendings for each group member for today in order')
-        print('Matt, Lauren-Nicole, Luka, Lejla, Emma')
-        print('Data should be 5 whole numbers, separated by comas')
-        print('Example: 10,20,30,40,50,60\n')
+        print("""
+Enter amounts of common spending's for each group member for today in order
+'Matt, Laureen-Nicole, Luka, Lejla, Emma'.
+The data will be added to total spending's and
+new average data will be calculated and printed.
+
+Data should be 5 whole numbers, separated by comas.
+
+Example: 23,45,33,12,28\n""")
 
         spendings_str = input('Enter your spendings here:\n')
 
         spendings_data = spendings_str.split(',')
 
         if validate_data(spendings_data):
-            print('Data is correct\n')
+            print('You provided correct data!\n')
             break
 
     return spendings_data
@@ -40,8 +45,8 @@ def get_individual_spendings():
 def validate_data(values):
     """
     Convert all input string values from 'spendings_str' into integers
-    and raises ValueError if strings can not be converted into integers and/or
-    if it is not exactly 5 values.
+    and raises ValueError if strings can not be converted into integers
+    and/or if it is not exactly 5 values.
     """
 
     try:
@@ -127,17 +132,17 @@ def main():
     average_number = get_average_spendings()
     update_spendings_difference(average_number)
     headings = SHEET.worksheet('Total individual spendings').row_values(1)
-    print('Total members spendings!\n')
-    print(headings)
+    print("Members total spending's\n")
+    print(', '.join(headings))
     print(new_total_data)
     print("""
-    Difference saldo shows difference in members spendings,
-compared to groups average spendings:
+"Difference saldo" shows difference in members spending's,
+compared to groups average spending's:
 - MINUS saldo represent that member has spend LESS than average
 - PLUS saldo represent that member has spend MORE than average \n""")
-    print(headings)
+    print(', '.join(headings))
     print(average_number)
 
-    
-print('Welcome to Vacation Spendings Group\n')
+
+print("Vacation Spendings Group\n")
 main()

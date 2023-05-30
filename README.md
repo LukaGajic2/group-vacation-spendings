@@ -46,7 +46,11 @@ Link to live site:
 
 ![Alt text](/images/result-shot.png)
 
+### Future features
+- Allow to change names in group.
+- Allow to add new members
 
+<br/>
 
 ## Testing
 
@@ -80,4 +84,4 @@ This project has been deployed using Code Institute's mock terminal for Heroku.
 
 # CREDITS
 
--Code Institute for the deployment template
+- Code Institute for the deployment template
