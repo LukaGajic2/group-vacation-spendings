@@ -142,7 +142,8 @@ compared to groups average spending's:
 - PLUS saldo represent that member has spend MORE than average \n""")
     print(', '.join(headings))
     print(average_number)
-
+    print("""
+    Thank you for your input and see you tommorow!""")
 
 print("Vacation Spendings Group\n")
 main()
